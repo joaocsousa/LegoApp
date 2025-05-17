@@ -30,3 +30,11 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":api:core")
+include(":feature:characters:api:contract")
+include(":feature:characters:api:impl")
+include(":api:models:in")
+include(":feature:locations:api:contract")
+include(":feature:locations:api:impl")
+include(":feature:episodes:api:contract")
+include(":feature:episodes:api:impl")
+include(":feature:landing:ui")

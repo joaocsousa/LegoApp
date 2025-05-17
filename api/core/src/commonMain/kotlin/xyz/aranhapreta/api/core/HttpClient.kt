@@ -13,33 +13,33 @@ import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-fun httpClient(baseUrl: String, apiKey: String): HttpClient {
-    return HttpClient(httpEngineFactory) {
+internal fun json() = Json {
+    prettyPrint = true
+    isLenient = true
+    ignoreUnknownKeys = true
+    explicitNulls = false
+}
+
+internal fun httpClient(baseUrl: String, json: Json) =
+    HttpClient(httpEngineFactory) {
         install(Logging) {
             logger = Logger.DEFAULT
             level = LogLevel.ALL
             logger = object : Logger {
                 override fun log(message: String) {
-                    co.touchlab.kermit.Logger.d(
-                        tag = "KtorClient",
-                    ) { message }
+                    co.touchlab.kermit.Logger.d {
+                        message
+                    }
                 }
             }
         }
         defaultRequest {
             header("Content-Type", "application/json")
-            header("Authorization", "key $apiKey")
             url(baseUrl)
         }
         install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-                ignoreUnknownKeys = true
-                explicitNulls = false
-            })
+            json(json)
         }
     }
-}
 
 expect val httpEngineFactory: HttpClientEngineFactory<HttpClientEngineConfig>
