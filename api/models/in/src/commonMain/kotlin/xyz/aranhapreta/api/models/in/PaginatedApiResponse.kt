@@ -1,6 +1,9 @@
 package xyz.aranhapreta.api.models.`in`
 
-interface PaginatedApiResponse<T> {
-    val pagination: Pagination
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PaginatedApiResponse<T>(
+    val pagination: Pagination,
     val results: List<T>
-}
+)

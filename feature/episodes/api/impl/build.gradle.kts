@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -62,7 +61,6 @@ kotlin {
                 implementation(projects.api.core)
                 implementation(projects.api.models.`in`)
                 implementation(projects.feature.episodes.api.contract)
-                implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
                 implementation(libs.koin)
             }

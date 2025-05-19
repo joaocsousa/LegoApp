@@ -60,6 +60,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(projects.feature.characters.usecases.contract)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -67,6 +68,7 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.koin.compose)
+                implementation(libs.kermit)
             }
         }
 

@@ -43,7 +43,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.api.models.`in`)
+                api(projects.api.models.`in`)
             }
         }
 

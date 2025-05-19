@@ -38,6 +38,8 @@ kotlin {
             implementation(projects.feature.episodes.api.impl)
             implementation(projects.feature.characters.api.impl)
             implementation(projects.feature.characters.presentation)
+            implementation(projects.feature.characters.repositories.impl)
+            implementation(projects.feature.characters.usecases.impl)
             implementation(projects.feature.locations.presentation)
             implementation(projects.feature.episodes.presentation)
             implementation(compose.runtime)

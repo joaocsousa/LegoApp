@@ -13,12 +13,12 @@ internal class CharacterApiImpl(
 ) : CharactersApi {
 
     override suspend fun getCharacters(page: Int?): PaginatedApiResponse<Character> {
-        return client.get("/character") {
+        return client.get("character") {
             page?.let { parameter("page", it) }
         }.body()
     }
 
     override suspend fun getCharacter(id: Int): Character {
-        return client.get("/character/$id").body()
+        return client.get("character/$id").body<Character>()
     }
 }

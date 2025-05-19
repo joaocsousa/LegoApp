@@ -58,8 +58,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                // Add KMP dependencies here
             }
         }
 

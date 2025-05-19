@@ -7,6 +7,8 @@ import org.koin.compose.KoinApplication
 import xyz.aranhapreta.api.core.apiCoreModule
 import xyz.aranhapreta.feature.books.api.impl.featureCharactersApiKoinModule
 import xyz.aranhapreta.feature.characters.presentation.featureCharactersPresentationKoinModule
+import xyz.aranhapreta.feature.characters.repositories.impl.featureCharactersRepositoryKoinModule
+import xyz.aranhapreta.feature.characters.usecases.impl.featureCharactersUseCasesKoinModule
 import xyz.aranhapreta.feature.episodes.api.impl.featureEpisodesApiKoinModule
 import xyz.aranhapreta.feature.episodes.presentation.featureEpisodesPresentationKoinModule
 import xyz.aranhapreta.feature.locations.api.impl.featureLocationsApiKoinModule
@@ -28,6 +30,8 @@ internal fun Koin(content: @Composable () -> Unit) {
                     featureEpisodesPresentationKoinModule,
                     featureLocationsPresentationKoinModule,
                     featureCharactersPresentationKoinModule,
+                    featureCharactersRepositoryKoinModule,
+                    featureCharactersUseCasesKoinModule,
                 )
             )
         },
