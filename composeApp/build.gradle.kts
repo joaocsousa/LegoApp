@@ -37,14 +37,17 @@ kotlin {
             implementation(projects.feature.locations.api.impl)
             implementation(projects.feature.episodes.api.impl)
             implementation(projects.feature.characters.api.impl)
+            implementation(projects.feature.characters.presentation)
+            implementation(projects.feature.locations.presentation)
+            implementation(projects.feature.episodes.presentation)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.navigation)
             implementation(libs.koin.compose)
             implementation(libs.kermit)
             implementation(libs.kermit.koin)
@@ -85,4 +88,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-

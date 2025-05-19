@@ -64,6 +64,7 @@ kotlin {
                 implementation(projects.feature.locations.api.contract)
                 implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
+                implementation(libs.koin)
             }
         }
 
