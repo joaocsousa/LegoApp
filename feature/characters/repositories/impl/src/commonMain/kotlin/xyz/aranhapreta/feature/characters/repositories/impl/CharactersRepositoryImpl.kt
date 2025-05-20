@@ -15,9 +15,11 @@ internal class CharactersRepositoryImpl(
     private val charactersApi: CharactersApi
 ) : CharactersRepository {
     override fun getAllCharacters(): Flow<List<Character>> {
-        return flow<PaginatedApiResponse<CharacterApiModel>> { charactersApi.getCharacters() }
-            .map { it.results }
-            .map { it.toDomainModel() }
+        return flow<Result<PaginatedApiResponse<CharacterApiModel>>> {
+            emit(charactersApi.getCharacters())
+        }.map { result ->
+            result.getOrNull()?.results?.toDomainModel() ?: emptyList()
+        }
     }
 
     private fun List<CharacterApiModel>.toDomainModel() = map { apiModel ->
@@ -36,8 +38,8 @@ internal class CharactersRepositoryImpl(
                 "Male" -> Gender.Male
                 "Genderless" -> Gender.Genderless
                 else -> Gender.Unknown
-
-            }
+            },
+            id = apiModel.id.toString(),
         )
     }
 }

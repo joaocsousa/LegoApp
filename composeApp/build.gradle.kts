@@ -33,6 +33,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+            implementation(projects.theme)
             implementation(projects.api.core)
             implementation(projects.feature.locations.api.impl)
             implementation(projects.feature.episodes.api.impl)
@@ -53,6 +54,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.kermit)
             implementation(libs.kermit.koin)
+            implementation(libs.coil.ktor)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

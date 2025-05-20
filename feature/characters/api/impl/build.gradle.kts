@@ -48,6 +48,7 @@ kotlin {
                 implementation(projects.feature.characters.api.contract)
                 implementation(libs.ktor.client.core)
                 implementation(libs.koin)
+                implementation(libs.kermit)
             }
         }
 

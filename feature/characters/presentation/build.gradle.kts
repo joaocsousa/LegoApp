@@ -7,6 +7,8 @@ plugins {
 
 kotlin {
 
+    jvmToolchain(17)
+
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
@@ -23,6 +25,7 @@ kotlin {
         }.configure {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
     // For iOS targets, this is also where you should
@@ -61,14 +64,16 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.feature.characters.usecases.contract)
+                implementation(projects.theme)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.androidx.lifecycle.runtimeCompose)
                 implementation(libs.koin.compose)
                 implementation(libs.kermit)
+                implementation(libs.coil)
             }
         }
 
@@ -104,5 +109,4 @@ kotlin {
             }
         }
     }
-
 }

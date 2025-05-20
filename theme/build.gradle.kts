@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -9,7 +11,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "xyz.aranhapreta.feature.characters.repositories.impl"
+        namespace = "xyz.aranhapreta.theme"
         compileSdk = 35
         minSdk = 24
 
@@ -21,6 +23,8 @@ kotlin {
         }.configure {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
+
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
     // For iOS targets, this is also where you should
@@ -30,7 +34,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "feature:characters:repositories:implKit"
+    val xcfName = "themeKit"
 
     iosX64 {
         binaries.framework {
@@ -58,10 +62,12 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.feature.characters.repositories.contract)
-                implementation(projects.feature.characters.api.contract)
-                implementation(libs.koin)
-                implementation(libs.kermit)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
             }
         }
 
@@ -73,9 +79,7 @@ kotlin {
 
         androidMain {
             dependencies {
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
+                implementation(compose.uiTooling)
             }
         }
 

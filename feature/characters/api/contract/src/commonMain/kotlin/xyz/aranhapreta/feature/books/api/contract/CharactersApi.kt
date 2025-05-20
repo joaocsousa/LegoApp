@@ -6,7 +6,7 @@ import xyz.aranhapreta.api.models.`in`.PaginatedApiResponse
 interface CharactersApi {
     suspend fun getCharacters(
         page: Int? = null,
-    ): PaginatedApiResponse<Character>
+    ): Result<PaginatedApiResponse<Character>>
 
-    suspend fun getCharacter(id: Int): Character
+    suspend fun getCharacter(id: Int): Result<Character>
 }
