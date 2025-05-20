@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -50,26 +51,29 @@ import xyz.aranhapreta.feature.characters.presentation.models.CharacterStatus
 import xyz.aranhapreta.feature.characters.presentation.models.CharactersScreenState
 
 @Composable
-fun CharactersScreen() {
+fun CharactersScreen(contentPadding: PaddingValues) {
     val viewModel = koinViewModel<CharactersViewModel>()
     val state = viewModel.state.collectAsStateWithLifecycle()
     Content(
         state = state.value,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        contentPadding = contentPadding,
     )
 }
 
 @Composable
 private fun Content(
     state: CharactersScreenState,
-    onEvent: (CharacterScreenEvent) -> Unit
+    onEvent: (CharacterScreenEvent) -> Unit,
+    contentPadding: PaddingValues
 ) {
     when (state) {
         is CharactersScreenState.Error -> Text("ERROR")
         CharactersScreenState.Loading -> Loading()
         is CharactersScreenState.Success -> CharactersList(
             state = state,
-            onEvent = onEvent
+            onEvent = onEvent,
+            contentPadding = contentPadding,
         )
 
         CharactersScreenState.Initial -> Box {}
@@ -79,7 +83,7 @@ private fun Content(
 @Composable
 private fun Loading() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().systemBarsPadding(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
@@ -89,12 +93,21 @@ private fun Loading() {
 @Composable
 private fun CharactersList(
     state: CharactersScreenState.Success,
-    onEvent: (CharacterScreenEvent) -> Unit
+    onEvent: (CharacterScreenEvent) -> Unit,
+    contentPadding: PaddingValues
 ) {
+    val padding = 24.dp
+    val topPadding = contentPadding.calculateTopPadding() + padding
+    val bottomPadding = contentPadding.calculateBottomPadding()+ padding
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = spacedBy(24.dp),
-        contentPadding = PaddingValues(24.dp)
+        contentPadding = PaddingValues(
+            start = padding,
+            top = topPadding,
+            end = padding,
+            bottom = bottomPadding
+        ),
     ) {
         items(state.characters) { item ->
             CharacterItem(
