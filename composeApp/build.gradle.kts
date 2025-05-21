@@ -55,6 +55,7 @@ kotlin {
             implementation(libs.kermit)
             implementation(libs.kermit.koin)
             implementation(libs.coil.ktor)
+            implementation(libs.icons)
             implementation(libs.haze)
             implementation(libs.haze.materials)
         }

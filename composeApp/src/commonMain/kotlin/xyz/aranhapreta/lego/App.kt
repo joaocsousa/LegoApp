@@ -5,8 +5,18 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Groups2
+import androidx.compose.material.icons.filled.Subscriptions
+import androidx.compose.material.icons.filled.TravelExplore
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Groups2
+import androidx.compose.material.icons.outlined.Subscriptions
+import androidx.compose.material.icons.outlined.TravelExplore
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -64,13 +74,16 @@ fun App() {
                         containerColor = Color.Transparent,
                     ) {
                         Screen.entries.forEachIndexed { index, destination ->
+                            val selected = selectedDestination == index
                             NavigationBarItem(
-                                selected = selectedDestination == index,
+                                selected = selected,
                                 onClick = {
                                     navController.navigate(route = destination.name)
                                     selectedDestination = index
                                 },
-                                icon = {},
+                                icon = {
+                                    Icon(screen = destination, selected = selected)
+                                },
                                 label = { Text(destination.name) }
                             )
                         }
@@ -95,6 +108,34 @@ fun App() {
             }
         }
     }
+}
+
+@Composable
+private fun Icon(screen: Screen, selected: Boolean) {
+    val icon = when (screen) {
+        Screen.Characters -> if (selected) {
+            Icons.Filled.Groups2
+        } else {
+            Icons.Outlined.Groups2
+        }
+
+        Screen.Locations -> if (selected) {
+            Icons.Filled.TravelExplore
+        } else {
+            Icons.Outlined.TravelExplore
+        }
+
+        Screen.Episodes -> if (selected) {
+            Icons.Filled.Subscriptions
+        } else {
+            Icons.Outlined.Subscriptions
+        }
+    }
+    Icon(
+        imageVector = icon,
+        contentDescription = screen.name,
+        modifier = Modifier.size(30.dp),
+    )
 }
 
 @Composable

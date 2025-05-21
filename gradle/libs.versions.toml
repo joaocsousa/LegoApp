@@ -23,6 +23,7 @@ buildKonfig = "0.17.1"
 coroutines = "1.10.2"
 coil = "3.2.0"
 haze = "1.6.2"
+icons = "1.7.3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -53,6 +54,7 @@ coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
+icons = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "icons" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
