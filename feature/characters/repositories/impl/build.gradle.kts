@@ -60,6 +60,7 @@ kotlin {
             dependencies {
                 implementation(projects.feature.characters.repositories.contract)
                 implementation(projects.feature.characters.api.contract)
+                implementation(projects.database.contract)
                 implementation(libs.koin)
                 implementation(libs.kermit)
             }

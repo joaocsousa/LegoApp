@@ -1,0 +1,33 @@
+CREATE TABLE character (
+    id INTEGER PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    status TEXT NOT NULL,
+    species TEXT NOT NULL,
+    type TEXT NOT NULL, -- Use TEXT NULL if 'type' can be absent
+    gender TEXT NOT NULL,
+    image TEXT NOT NULL
+);
+
+insertCharacter:
+INSERT OR REPLACE INTO character (
+    id,
+    name,
+    status,
+    species,
+    type,
+    gender,
+    image
+) VALUES (?, ?, ?, ?, ?, ?, ?);
+
+selectAllCharacters:
+SELECT *
+FROM character
+ORDER BY id ASC;
+
+selectCharacterById:
+SELECT *
+FROM character
+WHERE id = :id;
+
+countAll:
+SELECT COUNT(*) FROM character;

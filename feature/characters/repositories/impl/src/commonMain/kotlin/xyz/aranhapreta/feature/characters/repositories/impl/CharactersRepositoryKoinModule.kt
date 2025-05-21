@@ -5,6 +5,9 @@ import xyz.aranhapreta.feature.characters.repositories.contract.CharactersReposi
 
 val featureCharactersRepositoryKoinModule = module {
     factory<CharactersRepository> {
-        CharactersRepositoryImpl(charactersApi = get())
+        CharactersRepositoryImpl(
+            charactersApi = get(),
+            charactersDao = get()
+        )
     }
 }

@@ -12,10 +12,10 @@ import xyz.aranhapreta.feature.characters.presentation.models.CharacterScreenEve
 import xyz.aranhapreta.feature.characters.presentation.models.CharacterState
 import xyz.aranhapreta.feature.characters.presentation.models.CharactersScreenState
 import xyz.aranhapreta.feature.characters.presentation.models.toState
-import xyz.aranhapreta.feature.characters.usecases.contract.GetAllCharacters
+import xyz.aranhapreta.feature.characters.usecases.contract.ObserveAllCharacters
 
 internal class CharactersViewModel(
-    private val getAllCharacters: GetAllCharacters
+    private val observeAllCharacters: ObserveAllCharacters
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<CharactersScreenState>(CharactersScreenState.Initial)
@@ -28,7 +28,7 @@ internal class CharactersViewModel(
     init {
         viewModelScope.launch {
             _state.value = CharactersScreenState.Loading
-            getAllCharacters().collect {
+            observeAllCharacters().collect {
                 _state.value = CharactersScreenState.Success(characters = it.toState())
             }
         }

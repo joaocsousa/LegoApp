@@ -24,6 +24,9 @@ coroutines = "1.10.2"
 coil = "3.2.0"
 haze = "1.6.2"
 icons = "1.7.3"
+sqldelight = "2.1.0"
+kotlinStdlib = "2.1.21"
+kotlinStdlibVersion = "2.1.21"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -55,6 +58,10 @@ coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coi
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
 icons = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "icons" }
+sqlite-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqlite-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqlite-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlibVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -66,3 +73,4 @@ kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

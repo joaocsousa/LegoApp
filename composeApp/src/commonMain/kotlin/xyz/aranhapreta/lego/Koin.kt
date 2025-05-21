@@ -5,6 +5,7 @@ import co.touchlab.kermit.Logger
 import co.touchlab.kermit.koin.KermitKoinLogger
 import org.koin.compose.KoinApplication
 import xyz.aranhapreta.api.core.apiCoreModule
+import xyz.aranhapreta.database.databaseKoinModule
 import xyz.aranhapreta.feature.books.api.impl.featureCharactersApiKoinModule
 import xyz.aranhapreta.feature.characters.presentation.featureCharactersPresentationKoinModule
 import xyz.aranhapreta.feature.characters.repositories.impl.featureCharactersRepositoryKoinModule
@@ -24,6 +25,7 @@ internal fun Koin(content: @Composable () -> Unit) {
             modules(
                 listOf(
                     apiCoreModule,
+                    databaseKoinModule,
                     featureEpisodesApiKoinModule,
                     featureCharactersApiKoinModule,
                     featureLocationsApiKoinModule,

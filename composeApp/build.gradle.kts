@@ -35,6 +35,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.theme)
             implementation(projects.api.core)
+            implementation(projects.database.impl)
             implementation(projects.feature.locations.api.impl)
             implementation(projects.feature.episodes.api.impl)
             implementation(projects.feature.characters.api.impl)
