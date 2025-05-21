@@ -42,6 +42,14 @@ internal class CharactersRepositoryImpl(
 
     override fun observeState(): Flow<CharacterLoadingState> = _state.asStateFlow()
 
+    override suspend fun loadNextPage() {
+        val currentPage = charactersDao.getPaginationInfo()?.currentPage ?: 1
+        val totalPages = charactersDao.getPaginationInfo()?.totalPages ?: 1
+        if (currentPage < totalPages) {
+            loadPage(currentPage + 1)
+        }
+    }
+
     private suspend fun loadPage(page: Int) {
         if (_state.compareAndSet(Idle, Loading) || _state.compareAndSet(Failed, Loading)) {
             try {

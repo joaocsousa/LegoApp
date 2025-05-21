@@ -15,21 +15,28 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import legoappkmp.feature.characters.presentation.generated.resources.Res
 import legoappkmp.feature.characters.presentation.generated.resources.gender_female
 import legoappkmp.feature.characters.presentation.generated.resources.gender_genderless
@@ -67,16 +74,15 @@ private fun Content(
     onEvent: (CharacterScreenEvent) -> Unit,
     contentPadding: PaddingValues
 ) {
-    when (state) {
-        is CharactersScreenState.Error -> Text("ERROR")
-        CharactersScreenState.Loading -> Loading()
-        is CharactersScreenState.Success -> CharactersList(
+    when {
+        state.characters.isNotEmpty() -> CharactersList(
             state = state,
             onEvent = onEvent,
             contentPadding = contentPadding,
         )
 
-        CharactersScreenState.Initial -> Box {}
+        state.isLoading -> Loading()
+        state.error -> Text("ERROR")
     }
 }
 
@@ -92,13 +98,26 @@ private fun Loading() {
 
 @Composable
 private fun CharactersList(
-    state: CharactersScreenState.Success,
+    state: CharactersScreenState,
     onEvent: (CharacterScreenEvent) -> Unit,
     contentPadding: PaddingValues
 ) {
     val padding = 24.dp
     val topPadding = contentPadding.calculateTopPadding() + padding
-    val bottomPadding = contentPadding.calculateBottomPadding()+ padding
+    val bottomPadding = contentPadding.calculateBottomPadding() + padding
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo }
+            .map { it.lastOrNull()?.index }
+            .filterNotNull()
+            .distinctUntilChanged()
+            .collect { index ->
+                Logger.i { "new last element $index" }
+                onEvent(CharacterScreenEvent.ScrolledTo(index))
+            }
+    }
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = spacedBy(24.dp),
@@ -108,6 +127,7 @@ private fun CharactersList(
             end = padding,
             bottom = bottomPadding
         ),
+        state = listState,
     ) {
         items(state.characters) { item ->
             CharacterItem(
@@ -115,6 +135,18 @@ private fun CharactersList(
                 item = item,
                 onEvent = onEvent,
             )
+        }
+        if (state.isLoading) {
+            item {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
         }
     }
 }
@@ -177,8 +209,6 @@ private fun speciesLabel(species: String, type: String): String {
     val species = listOf(species, type).filter { it.isNotBlank() }.joinToString(", ")
     return stringResource(Res.string.species_label, species)
 }
-
-private fun String.normalize() = this.lowercase().replaceFirstChar { it.uppercase() }
 
 @Composable
 private fun CharacterGender.label(): String {
