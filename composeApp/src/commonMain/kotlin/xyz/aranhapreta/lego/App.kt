@@ -10,7 +10,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Groups2
 import androidx.compose.material.icons.filled.Subscriptions
 import androidx.compose.material.icons.filled.TravelExplore
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Groups2
 import androidx.compose.material.icons.outlined.Subscriptions
 import androidx.compose.material.icons.outlined.TravelExplore
@@ -23,10 +22,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -34,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
@@ -51,9 +49,13 @@ fun App() {
     Koin {
         AppTheme {
             val navController = rememberNavController()
-            val startDestination = Screen.entries.first()
-            var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
             val hazeState = rememberHazeState()
+            val backStackEntry by navController.currentBackStackEntryAsState()
+            val currentScreen by derivedStateOf {
+                Screen.entries.firstOrNull { screen ->
+                    screen.name == backStackEntry?.destination?.route
+                } ?: Screen.Characters
+            }
             Scaffold(
                 topBar = {
                     CenterAlignedTopAppBar(
@@ -63,7 +65,7 @@ fun App() {
                             .hazeEffect(state = hazeState, style = HazeMaterials.ultraThin())
                             .fillMaxWidth(),
                         title = {
-                            Text(Screen.entries[selectedDestination].name)
+                            Text(currentScreen.name)
                         }
                     )
                 },
@@ -74,13 +76,12 @@ fun App() {
                         containerColor = Color.Transparent,
                     ) {
                         Screen.entries.forEachIndexed { index, destination ->
-                            val selected = selectedDestination == index
+                            val selected by derivedStateOf {
+                                currentScreen == destination
+                            }
                             NavigationBarItem(
                                 selected = selected,
-                                onClick = {
-                                    navController.navigate(route = destination.name)
-                                    selectedDestination = index
-                                },
+                                onClick = { navController.navigate(route = destination.name) },
                                 icon = {
                                     Icon(screen = destination, selected = selected)
                                 },
@@ -99,7 +100,7 @@ fun App() {
                 )
                 AppNavHost(
                     navController = navController,
-                    startDestination = startDestination,
+                    startDestination = Screen.entries.first(),
                     modifier = Modifier
                         .padding(paddingValuesWithoutNavigation)
                         .hazeSource(state = hazeState),
