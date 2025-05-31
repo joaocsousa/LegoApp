@@ -3,10 +3,10 @@ package xyz.aranhapreta.theme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
-import legoappkmp.theme.generated.resources.Res
-import legoappkmp.theme.generated.resources.exo_two_variable
-import legoappkmp.theme.generated.resources.orbitron_variable
 import org.jetbrains.compose.resources.Font
+import rickandmorty.theme.generated.resources.Res
+import rickandmorty.theme.generated.resources.exo_two_variable
+import rickandmorty.theme.generated.resources.orbitron_variable
 
 @Composable
 fun appTypography(): Typography {

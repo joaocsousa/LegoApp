@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -34,14 +33,9 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(projects.theme)
-            implementation(projects.api.core)
-            implementation(projects.database.impl)
-            implementation(projects.feature.locations.api.impl)
-            implementation(projects.feature.episodes.api.impl)
-            implementation(projects.feature.characters.api.impl)
+            implementation(projects.common.di.compose)
+            implementation(projects.database)
             implementation(projects.feature.characters.presentation)
-            implementation(projects.feature.characters.repositories.impl)
-            implementation(projects.feature.characters.usecases.impl)
             implementation(projects.feature.locations.presentation)
             implementation(projects.feature.episodes.presentation)
             implementation(compose.runtime)
@@ -52,9 +46,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.navigation)
-            implementation(libs.koin.compose)
-            implementation(libs.kermit)
-            implementation(libs.kermit.koin)
             implementation(libs.coil.ktor)
             implementation(libs.icons)
             implementation(libs.haze)
@@ -67,11 +58,11 @@ kotlin {
 }
 
 android {
-    namespace = "xyz.aranhapreta.lego"
+    namespace = "xyz.aranhapreta.rickAndMorty"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "xyz.aranhapreta.lego"
+        applicationId = "xyz.aranhapreta.rickAndMorty"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

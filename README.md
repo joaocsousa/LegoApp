@@ -1,1 +1,1 @@
-# LegoApp
+# RickAndMorty

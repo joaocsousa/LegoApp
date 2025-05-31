@@ -1,12 +1,12 @@
 package xyz.aranhapreta.feature.locations.api.contract
 
-import xyz.aranhapreta.api.models.`in`.Location
-import xyz.aranhapreta.api.models.`in`.PaginatedApiResponse
+import xyz.aranhapreta.rickAndMorty.api.models.`in`.LocationApiModel
+import xyz.aranhapreta.rickAndMorty.api.models.`in`.PaginatedReponseApiModel
 
 interface LocationApi {
     suspend fun getLocations(
         page: Int? = null,
-    ): PaginatedApiResponse<Location>
+    ): PaginatedReponseApiModel<LocationApiModel>
 
-    suspend fun getLocation(id: Int): Location
+    suspend fun getLocation(id: Int): LocationApiModel
 }

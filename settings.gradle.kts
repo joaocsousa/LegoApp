@@ -1,4 +1,4 @@
-rootProject.name = "LegoAppKMP"
+rootProject.name = "RickAndMorty"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -28,29 +28,38 @@ dependencyResolutionManagement {
     }
 }
 
+plugins {
+    id("org.jetbrains.kotlinx.kover.aggregation") version "0.9.1"
+}
+
+kover {
+    enableCoverage()
+}
+
 include(":composeApp")
 include(":api:core")
-include(":feature:characters:api:contract")
-include(":feature:characters:api:impl")
-include(":feature:locations:api:contract")
-include(":feature:locations:api:impl")
+
+include(":feature:characters:api")
+include(":feature:characters:usecases")
+include(":feature:characters:repositories")
+include(":feature:characters:entities")
+include(":feature:characters:presentation")
+
 include(":feature:episodes:api:contract")
 include(":feature:episodes:api:impl")
-include(":feature:characters:presentation")
 include(":feature:episodes:presentation")
-include(":feature:locations:presentation")
-include(":feature:characters:usecases:contract")
-include(":feature:characters:usecases:impl")
-include(":feature:locations:usecases:contract")
-include(":feature:locations:usecases:impl")
 include(":feature:episodes:usecases:contract")
 include(":feature:episodes:usecases:impl")
-include(":feature:characters:repositories:contract")
-include(":feature:characters:entities")
 include(":feature:episodes:entities")
+
+include(":feature:locations:api:contract")
+include(":feature:locations:api:impl")
+include(":feature:locations:presentation")
+include(":feature:locations:usecases:contract")
+include(":feature:locations:usecases:impl")
 include(":feature:locations:entities")
-include(":feature:characters:repositories:impl")
 include(":api:models:in")
 include(":theme")
-include(":database:contract")
-include(":database:impl")
+include(":database")
+include(":common:di:compose")
+include(":common:di:modules")

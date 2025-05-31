@@ -6,23 +6,16 @@ plugins {
 kotlin {
 
     androidLibrary {
-        namespace = "xyz.aranhapreta.api.core"
+        namespace = "xyz.aranhapreta.rickAndMorty.api.core"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
-
-        withHostTestBuilder {
-        }
-
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }.configure {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
     }
 
-    val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
-
-    iosTargets.forEach {
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
         it.binaries.framework {
             baseName = "api:coreKit"
         }
@@ -40,23 +33,9 @@ kotlin {
             }
         }
 
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
-        }
-
         androidMain {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
-            }
-        }
-
-        getByName("androidDeviceTest") {
-            dependencies {
-                implementation(libs.androidx.test.runner)
-                implementation(libs.androidx.core)
-                implementation(libs.androidx.testExt.junit)
             }
         }
 
