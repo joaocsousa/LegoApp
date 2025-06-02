@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
 import xyz.aranhapreta.rickAndMorty.database.models.CharacterDbModel
 import xyz.aranhapreta.rickAndMorty.database.models.CharacterPaginationDbModel
-import xyzaranhapretarickandmortydatabase.Character
 
 internal class CharactersDaoImpl(
     database: Database,

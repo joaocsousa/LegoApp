@@ -6,6 +6,8 @@ plugins {
 
 kotlin {
 
+    jvmToolchain(17)
+
     androidLibrary {
         namespace = "xyz.aranhapreta.rickAndMorty.database"
         compileSdk = 35
