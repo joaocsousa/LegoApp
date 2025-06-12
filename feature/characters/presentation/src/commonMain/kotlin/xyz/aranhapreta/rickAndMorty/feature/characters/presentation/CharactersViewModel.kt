@@ -53,7 +53,7 @@ internal class CharactersViewModel(
 
     fun onEvent(event: CharacterScreenEvent) {
         when (event) {
-            is CharacterClicked -> println("event ${event}")
+            is CharacterClicked -> Logger.d { "event $event" }
             is CharacterScreenEvent.ScrolledTo -> onScrolledTo(event.index)
         }
     }

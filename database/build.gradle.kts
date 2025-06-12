@@ -25,6 +25,7 @@ kotlin {
     }
 
     sourceSets {
+        androidUnitTest
         commonMain {
             dependencies {
                 implementation(libs.coroutines)
@@ -39,6 +40,7 @@ kotlin {
             }
         }
 
+        iosTest
         iosMain {
             dependencies {
                 implementation(libs.sqlite.native)

@@ -59,7 +59,11 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.koin.test)
+                implementation(libs.coroutines.test)
+                implementation(libs.turbine)
                 implementation(compose.uiTest)
+                implementation(projects.common.di.modules)
             }
         }
 
